@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
+class App extends Component {
+
+  state = {
+    contacts: [],
+    name: ''
+  };
+
+  handleChange = (evt) => {
+    this.setState({name: evt.target.value});
+  }
+
+  render() {
+  const { name } = this.state;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Phonebook</h1>
+      <form>
+        <label>Name</label>
+        <input type="text" value={name} placeholder="Input name..." onChange={this.handleChange}></input>
+        <button type="submit">Add contact</button>
+      </form>
+      <h2>Contacts</h2>
+      <ul className="contactList">
+
+      </ul>
     </div>
-  );
+  )}
 }
 
 export default App;
