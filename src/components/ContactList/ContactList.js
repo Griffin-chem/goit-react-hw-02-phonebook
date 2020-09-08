@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import {ContactItem} from '../ContactItem/ContactItem';
+import { ContactItem } from '../ContactItem/ContactItem';
+
+import { ListCSS } from './styledContactList';
 
 class ContactList extends Component { 
 
@@ -21,9 +23,9 @@ class ContactList extends Component {
     const { contacts, onDelete } = this.props;
 
     return (
-      <ul>
+      <ListCSS>
         {contacts.map((contact) => (<ContactItem key={contact.id} onClick={onDelete} {...contact}></ContactItem>))}
-      </ul>
+      </ListCSS>
     )}
 }
 

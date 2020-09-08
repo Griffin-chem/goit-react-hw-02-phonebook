@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
+import {
+  FormCSS,
+  LabelCSS,
+  TextInputCSS,
+  SubmitCSS
+} from './styledContactForm';
+
 class ContactForm extends Component {
   
   static propTypes = {
@@ -66,13 +73,13 @@ class ContactForm extends Component {
   render () {
   const { name, number } = this.state;
   return (
-  <form onSubmit={this.handleSubmit}>
-    <label htmlFor="name_input">Name</label>
-    <input id="name_input" name="name" type="text" value={name} placeholder="Input name..." onChange={this.handleInputChange}></input>
-    <label htmlFor="number_input">Phone</label>
-    <input id="number_input" name="number" type="text" value={number} placeholder="Input number..." onChange={this.handleInputChange}></input>
-    <input type="submit" value="Add contact"></input>
-  </form>
+  <FormCSS onSubmit={this.handleSubmit}>
+    <LabelCSS htmlFor="name_input">Name</LabelCSS>
+    <TextInputCSS id="name_input" name="name" type="text" value={name} placeholder="Input name..." onChange={this.handleInputChange}></TextInputCSS>
+    <LabelCSS htmlFor="number_input">Phone</LabelCSS>
+    <TextInputCSS id="number_input" name="number" type="text" value={number} placeholder="Input number..." onChange={this.handleInputChange}></TextInputCSS>
+    <SubmitCSS type="submit" value="Add contact"></SubmitCSS>
+  </FormCSS>
   )}
 };
 

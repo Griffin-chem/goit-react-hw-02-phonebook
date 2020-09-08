@@ -1,9 +1,14 @@
 import React from 'react';
 
+import { 
+  SearchCSS,
+  LabelCSS
+ } from './styledSearch';
+
 const SearchField = ({filter, onChange}) => (
   <>
-  <label htmlFor="search_input">Find contacts by name</label>
-  <input id="search_input" name="filter" type="text" value={filter} onChange={onChange}></input>
+  <LabelCSS htmlFor="search_input">Find contacts by name</LabelCSS>
+  <SearchCSS id="search_input" name="filter" type="text" value={filter} onChange={onChange}></SearchCSS>
   </>
 );
 

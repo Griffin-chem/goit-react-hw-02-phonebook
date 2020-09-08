@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import {ContactForm} from './components/ContactForm/ContactForm';
-import {SearchField} from './components/SearchField/SearchField';
-import {ContactList} from './components/ContactList/ContactList';
+import { ContactForm } from './components/ContactForm/ContactForm';
+import { SearchField } from './components/SearchField/SearchField';
+import { ContactList } from './components/ContactList/ContactList';
+
+import { 
+  AppCSS,
+  Caption,
+  SubTitle
+ } from './styledApp';
 
 const filterContacts = (array, query) => {
   return array.filter(contact => contact.name.toLowerCase().indexOf(query.toLowerCase()) !== -1)
@@ -40,14 +46,14 @@ class App extends Component {
   // Function to add new contact - goes to child
 
   addNewContact = (NewContact) => {
-    this.setState(({contacts}) => {
+    this.setState(({ contacts }) => {
       return {contacts: [...contacts, NewContact]}});
   }
   
   // Function to remove new contact - goes to child
 
   removeContact = (contactIDToRemove) => {
-    this.setState(({contacts}) => {
+    this.setState(({ contacts }) => {
       return {contacts: [...contacts.filter(({id}) => id !== contactIDToRemove)]}
     })
   }
@@ -56,13 +62,13 @@ class App extends Component {
   const { filter, contacts } = this.state;
   
   return (
-    <div>
-      <h1>Phonebook</h1>
+    <AppCSS>
+      <Caption>Phonebook</Caption>
       <ContactForm contacts={contacts} handleNewContact={this.addNewContact}></ContactForm>
-      <h2>Contacts</h2>
+      <SubTitle>Contacts</SubTitle>
       <SearchField filter={filter} onChange={this.handleInputChange}></SearchField>
       <ContactList contacts={this.contactsToShow()} onDelete={this.removeContact}></ContactList>
-    </div>
+    </AppCSS>
   )}
 }
 
