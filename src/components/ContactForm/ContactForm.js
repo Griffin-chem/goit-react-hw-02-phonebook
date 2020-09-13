@@ -9,6 +9,11 @@ import {
   SubmitCSS
 } from './styledContactForm';
 
+const INITIAL_STATE = {
+  name: '',
+  number: ''
+}
+
 class ContactForm extends Component {
   
   static propTypes = {
@@ -21,15 +26,17 @@ class ContactForm extends Component {
     handleNewContact: PropTypes.func.isRequired
   }
   
-  state = {
-    name: '',
-    number: ''
+  state = INITIAL_STATE;
+
+  resetState = () => {
+    this.setState(INITIAL_STATE);
   }
 
   // Handle behavior for Input field
 
   handleInputChange = ({ target }) => {
-    this.setState({[target.name]: target.value});
+    const { name, value } = target;
+    this.setState({[name]: value});
   };
 
   // Fuctions to add new contact to list
@@ -57,10 +64,7 @@ class ContactForm extends Component {
     this.isNewContact()
       ? this.addContact()
       : alert(`${this.state.name} is already exist!`)
-    this.setState({
-      name: '',
-      number: ''
-    });
+    this.resetState();
   }
 
   // Check if contact is new or existing
@@ -75,10 +79,27 @@ class ContactForm extends Component {
   return (
   <FormCSS onSubmit={this.handleSubmit}>
     <LabelCSS htmlFor="name_input">Name</LabelCSS>
-    <TextInputCSS id="name_input" name="name" type="text" value={name} placeholder="Input name..." onChange={this.handleInputChange}></TextInputCSS>
+    <TextInputCSS 
+      id="name_input" 
+      name="name" 
+      type="text" 
+      value={name} 
+      placeholder="Input name..." 
+      onChange={this.handleInputChange}>
+    </TextInputCSS>
     <LabelCSS htmlFor="number_input">Phone</LabelCSS>
-    <TextInputCSS id="number_input" name="number" type="text" value={number} placeholder="Input number..." onChange={this.handleInputChange}></TextInputCSS>
-    <SubmitCSS type="submit" value="Add contact"></SubmitCSS>
+    <TextInputCSS 
+      id="number_input" 
+      name="number" 
+      type="text" 
+      value={number} 
+      placeholder="Input number..." 
+      onChange={this.handleInputChange}>
+    </TextInputCSS>
+    <SubmitCSS 
+      type="submit" 
+      value="Add contact">
+    </SubmitCSS>
   </FormCSS>
   )}
 };
