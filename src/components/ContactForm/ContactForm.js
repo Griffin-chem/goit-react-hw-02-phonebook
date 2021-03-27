@@ -1,42 +1,42 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   FormCSS,
   LabelCSS,
   TextInputCSS,
-  SubmitCSS
-} from './styledContactForm';
+  SubmitCSS,
+} from "./styledContactForm";
 
 const INITIAL_STATE = {
-  name: '',
-  number: ''
-}
+  name: "",
+  number: "",
+};
 
 class ContactForm extends Component {
-  
   static propTypes = {
     contacts: PropTypes.arrayOf(
       PropTypes.exact({
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired
-    })).isRequired,
-    handleNewContact: PropTypes.func.isRequired
-  }
-  
+        number: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    handleNewContact: PropTypes.func.isRequired,
+  };
+
   state = INITIAL_STATE;
 
   resetState = () => {
     this.setState(INITIAL_STATE);
-  }
+  };
 
   // Handle behavior for Input field
 
   handleInputChange = ({ target }) => {
     const { name, value } = target;
-    this.setState({[name]: value});
+    this.setState({ [name]: value });
   };
 
   // Fuctions to add new contact to list
@@ -45,63 +45,71 @@ class ContactForm extends Component {
     const { handleNewContact } = this.props;
     const NewContact = this.createContact();
     handleNewContact(NewContact);
-  }
+  };
 
   createContact = () => {
     const { name, number } = this.state;
     return {
       id: uuidv4(),
       name,
-      number
-    }
-  }
+      number,
+    };
+  };
 
   // Define behavior on form submit
 
   handleSubmit = (evt) => {
     evt.preventDefault();
-    if (this.state.name === "") {return};
+    if (this.state.name === "") {
+      return;
+    }
     this.isNewContact()
       ? this.addContact()
-      : alert(`${this.state.name} is already exist!`)
+      : alert(`${this.state.name} is already exist!`);
     this.resetState();
-  }
+  };
 
   // Check if contact is new or existing
 
   isNewContact = () => {
     const { contacts } = this.props;
-    return !contacts.find(({ name }) => name.toLowerCase() === this.state.name.toLowerCase());
+    return !contacts.find(
+      ({ name }) => name.toLowerCase() === this.state.name.toLowerCase()
+    );
+  };
+
+  render() {
+    const { name, number } = this.state;
+    return (
+      <FormCSS onSubmit={this.handleSubmit}>
+        <LabelCSS htmlFor="name_input">Name</LabelCSS>
+        <TextInputCSS
+          id="name_input"
+          name="name"
+          type="text"
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+          required
+          value={name}
+          placeholder="Input name..."
+          onChange={this.handleInputChange}
+        ></TextInputCSS>
+        <LabelCSS htmlFor="number_input">Phone</LabelCSS>
+        <TextInputCSS
+          id="number_input"
+          name="number"
+          type="tel"
+          pattern="(\+?( |-|\.)?\d{1,2}( |-|\.)?)?(\(?\d{3}\)?|\d{3})( |-|\.)?(\d{3}( |-|\.)?\d{4})"
+          title="Номер телефона должен состоять из 11-12 цифр и может содержать цифры, пробелы, тире, пузатые скобки и может начинаться с +"
+          required
+          value={number}
+          placeholder="Input number..."
+          onChange={this.handleInputChange}
+        ></TextInputCSS>
+        <SubmitCSS type="submit" value="Add contact"></SubmitCSS>
+      </FormCSS>
+    );
   }
+}
 
-  render () {
-  const { name, number } = this.state;
-  return (
-  <FormCSS onSubmit={this.handleSubmit}>
-    <LabelCSS htmlFor="name_input">Name</LabelCSS>
-    <TextInputCSS 
-      id="name_input" 
-      name="name" 
-      type="text" 
-      value={name} 
-      placeholder="Input name..." 
-      onChange={this.handleInputChange}>
-    </TextInputCSS>
-    <LabelCSS htmlFor="number_input">Phone</LabelCSS>
-    <TextInputCSS 
-      id="number_input" 
-      name="number" 
-      type="text" 
-      value={number} 
-      placeholder="Input number..." 
-      onChange={this.handleInputChange}>
-    </TextInputCSS>
-    <SubmitCSS 
-      type="submit" 
-      value="Add contact">
-    </SubmitCSS>
-  </FormCSS>
-  )}
-};
-
-export {ContactForm};
+export { ContactForm };
